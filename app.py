@@ -1,10 +1,43 @@
 from dash import Dash, html, dcc, Input, Output
 import altair as alt
+import pandas as pd
 from vega_datasets import data
 
 
 # Read in global data
-countries = data.countries()
+url = "https://raw.githubusercontent.com/UofTCoders/workshops-dc-py/master/data/processed/world-data-gapminder.csv"
+gm = pd.read_csv(url, parse_dates=["year"])
+
+
+def plot_altair(xmax):
+    chart = (
+        alt.Chart(
+            gm[gm["year"] == str(xmax) + "-01-01"],
+            title="Year " + str(xmax),
+        )
+        .mark_circle()
+        .encode(
+            alt.X(
+                "children_per_woman",
+                title="Children per Woman",
+                scale=alt.Scale(domain=[0, 9]),
+            ),
+            alt.Y(
+                "life_expectancy",
+                scale=alt.Scale(domain=[0, 90]),
+                title="Life Expectancy",
+            ),
+            alt.Color("region", title="Region"),
+            alt.Size(
+                "population",
+                title="Population",
+                scale=alt.Scale(range=(20, 1000)),
+            ),
+        )
+        .configure_axis(titleFontSize=14)
+    )
+    return chart.to_html()
+
 
 # Setup app and layout/frontend
 app = Dash(__name__)
@@ -24,14 +57,15 @@ app.layout = html.Div(
                     className="line-graph",
                     id="scatter",
                 ),
-                dcc.Dropdown(
-                    className="dropdown",
-                    id="xcol-widget",
-                    value="country",  # REQUIRED to show the plot on the first page load
-                    options=[
-                        {"label": col, "value": col}
-                        for col in countries.columns
-                    ],
+                dcc.Slider(
+                    className="slider",
+                    id="xslider",
+                    min=1800,
+                    max=2010,
+                    updatemode="drag",
+                    value=1950,
+                    # step=10,
+                    marks={i: str(i) for i in range(1800, 2020, 10)},
                 ),
             ],
         ),
@@ -39,15 +73,9 @@ app.layout = html.Div(
 )
 
 # Set up callbacks/backend
-@app.callback(Output("scatter", "srcDoc"), Input("xcol-widget", "value"))
-def plot_altair(xcol):
-    chart = (
-        alt.Chart(countries)
-        .mark_point()
-        .encode(x=xcol, y="year", tooltip="country")
-        .interactive()
-    )
-    return chart.to_html()
+@app.callback(Output("scatter", "srcDoc"), Input("xslider", "value"))
+def update_output(xmax):
+    return plot_altair(xmax)
 
 
 if __name__ == "__main__":
