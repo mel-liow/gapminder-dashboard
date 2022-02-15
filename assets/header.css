@@ -1,0 +1,30 @@
+.app-header {
+    background-color: #143642;
+    height: 100px;
+    line-height: 60px;
+    border-bottom: thin lightgrey solid;
+}
+
+.app-header .app-header--title {
+    padding: 20px;
+    font-size: 36px;
+    text-align: center;
+    color: #DAD2D8;
+}
+
+.plot {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.line-graph {
+    border-width: 0;
+    width: 50%;
+    height: 400px;
+}
+
+.dropdown {
+    width: 400px;
+    text-align: center;
+}

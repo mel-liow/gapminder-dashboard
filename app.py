@@ -7,21 +7,32 @@ from vega_datasets import data
 countries = data.countries()
 
 # Setup app and layout/frontend
-app = Dash(
-    __name__,
-    external_stylesheets=["https://codepen.io/chriddyp/pen/bWLwgP.css"],
-)
+app = Dash(__name__)
+
 app.layout = html.Div(
     [
-        html.Iframe(
-            id="scatter",
-            style={"border-width": "0", "width": "100%", "height": "400px"},
+        html.Div(
+            className="app-header",
+            children=[
+                html.Div("Gapminder Dashboard", className="app-header--title")
+            ],
         ),
-        dcc.Dropdown(
-            id="xcol-widget",
-            value="country",  # REQUIRED to show the plot on the first page load
-            options=[
-                {"label": col, "value": col} for col in countries.columns
+        html.Div(
+            className="plot",
+            children=[
+                html.Iframe(
+                    className="line-graph",
+                    id="scatter",
+                ),
+                dcc.Dropdown(
+                    className="dropdown",
+                    id="xcol-widget",
+                    value="country",  # REQUIRED to show the plot on the first page load
+                    options=[
+                        {"label": col, "value": col}
+                        for col in countries.columns
+                    ],
+                ),
             ],
         ),
     ]
