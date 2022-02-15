@@ -64,7 +64,6 @@ app.layout = html.Div(
                     max=2000,
                     updatemode="drag",
                     value=1950,
-                    # step=10,
                     marks={i: str(i) for i in range(1800, 2010, 20)},
                 ),
             ],
