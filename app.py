@@ -54,18 +54,18 @@ app.layout = html.Div(
             className="plot",
             children=[
                 html.Iframe(
-                    className="line-graph",
+                    className="bubble-chart",
                     id="scatter",
                 ),
                 dcc.Slider(
                     className="slider",
                     id="xslider",
                     min=1800,
-                    max=2010,
+                    max=2000,
                     updatemode="drag",
                     value=1950,
                     # step=10,
-                    marks={i: str(i) for i in range(1800, 2020, 10)},
+                    marks={i: str(i) for i in range(1800, 2010, 20)},
                 ),
             ],
         ),

@@ -20,9 +20,9 @@
 }
 
 
-.line-graph {
+.bubble-chart {
     border-width: 0;
-    width: 800px;
+    width: 600px;
     height: 400px;
     align-items: center;
 }
