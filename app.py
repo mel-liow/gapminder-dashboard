@@ -1,8 +1,6 @@
 from dash import Dash, html, dcc, Input, Output
 import altair as alt
 import pandas as pd
-from vega_datasets import data
-
 
 # Read in data
 url = "https://raw.githubusercontent.com/UofTCoders/workshops-dc-py/master/data/processed/world-data-gapminder.csv"
