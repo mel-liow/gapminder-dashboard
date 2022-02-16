@@ -4,7 +4,7 @@ import pandas as pd
 from vega_datasets import data
 
 
-# Read in global data
+# Read in data
 url = "https://raw.githubusercontent.com/UofTCoders/workshops-dc-py/master/data/processed/world-data-gapminder.csv"
 gm = pd.read_csv(url, parse_dates=["year"])
 
@@ -39,9 +39,12 @@ def plot_altair(xmax):
     return chart.to_html()
 
 
-# Setup app and layout/frontend
 app = Dash(__name__)
 
+# Setup server
+server = app.server
+
+# Setup app and layout/frontend
 app.layout = html.Div(
     [
         html.Div(
@@ -63,7 +66,7 @@ app.layout = html.Div(
                     min=1800,
                     max=2000,
                     updatemode="drag",
-                    value=1950,
+                    value=1900,
                     marks={i: str(i) for i in range(1800, 2010, 20)},
                 ),
             ],
