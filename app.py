@@ -37,12 +37,13 @@ def plot_altair(xmax):
     return chart.to_html()
 
 
+# Setup app
 app = Dash(__name__)
 
 # Setup server
 server = app.server
 
-# Setup app and layout/frontend
+# Setup layout/frontend
 app.layout = html.Div(
     [
         html.Div(
